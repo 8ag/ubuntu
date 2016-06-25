@@ -1,0 +1,14 @@
+echo "options iwlwifi 11n_disable=1" | sudo tee /etc/modprobe.d/iwlwifi.conf
+sudo modprobe -rfv iwldvm
+sudo modprobe -rfv iwlwifi
+sudo modprobe -v iwlwifi
+
+
+What does this do? The 11n_disable option disables 802.11n features. Adding it to /etc/modprobe.d/iwlwifi.conf makes the change persist after reboots (because it will be part of the module config). The modprobe -rfv commands are removing the kernel modules iwldvm and iwlwifi, and finally the last line modprobe -v is adding iwlwifi back in.
+To know what those kernel modules are/do, you can run modinfo <module name> | grep description, which will tell you the following:
+
+iwlwifi is an Intel(R) Wireless WiFi driver for Linux (generic Intel drivers)
+
+iwldvm is Intel(R) Wireless WiFi Link AGN driver for Linux (more specific drivers)
+
+http://askubuntu.com/questions/529347/how-do-i-keep-my-wifi-from-dropping-out
